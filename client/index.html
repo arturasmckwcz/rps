@@ -8,18 +8,26 @@
 
 <body>
     <h1>Here comes R-P-S game for two!</h1>
+    <p id="name"></p>
+    <div id="wrap">
+        <form id="form">
+            <label for="input">Enter your name:</label><br>
+            <input id="input" type="text">
+            <button id="button">Enter</button>
+        </form>
+    </div>
     <div class="chat-wrapper">
         <ul id="events"></ul>
     </div>
-    <div class="choices-wrapper ">
-        <div class="choice " ; id="r ">
-            <img src="images/rock.png " ; height="75 " ; width="75 " ; alt=" ">
+    <div class="choices-wrapper">
+        <div class="choice">
+            <img class="choice-pic" id="r" src="images/rock.png" height="75" width="75" alt="">
         </div>
-        <div class="choice " ; id="p ">
-            <img src="images/paper.png " ; height="75 " ; width="75 " ; alt=" ">
+        <div class="choice">
+            <img class="choice-pic" id="p" src="images/paper.png" height="75" width="75" alt="">
         </div>
-        <div class="choice " ; id="s ">
-            <img src="images/scissors.png " ; height="75 " ; width="75 " ; alt=" ">
+        <div class="choice">
+            <img class="choice-pic" id="s" src="images/scissors.png" height="75" width="75" alt="">
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>

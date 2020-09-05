@@ -1,0 +1,13 @@
+#events {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.choices-wrapper {
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+}
+
+.choice-pic:hover {
+    cursor: pointer;
+}
