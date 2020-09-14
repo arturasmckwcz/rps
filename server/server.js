@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 class RPSGame {
     constructor() {
-        this.player1 = null;
+        this.player1 = null; ??
         this.name1 = '';
         this.player2 = null;
         this.name2 = '';
@@ -100,30 +100,44 @@ io.on('connection', (sock) => {
     if (game.getPlayer1() == null) {
         console.log(new(Date), "Setting PLAYER1.");
         game.setPlayer1(sock);
+        game.setName1('PLAYER1');
         sock.on('register', (name) => {
             game.setName1(name);
+            console.log(new(Date), `Registering: ${game.getName1()} as PLAYER1`)
         });
-        sock.emit('register', '');
+        sock.on('disconnect', () => {
+            game.setPlayer1(null);
+        });
+        sock.emit('register', 'PLAYER1');
     } else if (game.getPlayer2() == null) {
         console.log(new(Date), "Setting PLAYER2.");
         game.setPlayer2(sock);
+        game.setName2('PLAYER2');
         sock.on('register', (name) => {
             game.setName2(name);
+            console.log(new(Date), `Registering: ${game.getName2()} as PLAYER2`)
         });
-        sock.emit('register', '');
+        sock.on('disconnect', () => {
+            game.setPlayer2(null);
+        });
+        sock.emit('register', 'PLAYER2');
     };
 
     sock.on('move', (move) => {
-        console.log(new(Date), move);
-        game.setMove(move);
-        console.log(new(Date), game.getMove());
-        let flag = game.isMoveComplete();
-        console.log(`PLAYER1: ${game.getName1()}\nPLAYER2: ${game.getName2()}`);
-        if (flag) {
-            console.log(new(Date), "Just about to conclude the game.");
-            io.emit('message', `The game is concluded by ${game.getScore()}`);
-            game.reset();
-        };
+        console.log(new(Date), game.getPlayer1()==sock, game.getPlayer2()==sock);
+        if (sock == game.getPlayer1() || sock == game.getPlayer2()) {
+            game.setMove(move);
+            console.log(new(Date), game.getMove());
+            let flag = game.isMoveComplete();
+            console.log(`PLAYER1: ${game.getName1()}\nPLAYER2: ${game.getName2()}`);
+            if (flag) {
+                console.log(new(Date), "Just about to conclude the game.");
+                io.emit('message', `The game is concluded by ${game.getScore()}`);
+                game.reset();
+            };
+        } else {
+            // io.emit('register');
+        }
     });
 });
 

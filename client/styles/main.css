@@ -1,13 +1,32 @@
+body {
+	font-family: Raleway, sans-serif;
+	font-size: 2rem;
+	line-height: 1.5;
+	background-color: lightgray;
+	color: black;
+}
+
 #events {
-    height: calc(100vh - 200px);
+    height: 10rem; /*calc(85vh - 450px);*/
     overflow-y: auto;
 }
 
 .choices-wrapper {
+    text-align: center;
     display: grid;
-    grid-template-columns: 200px 200px 200px;
+    grid-template-columns: 100px 100px 100px;
+}
+
+.choice-pic {
+    display: inline-block;
+    border-radius: 50%;
 }
 
 .choice-pic:hover {
     cursor: pointer;
+}
+
+#name {
+    color: darkred;
+    font-size: 2.5rem;
 }

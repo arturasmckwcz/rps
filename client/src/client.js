@@ -1,17 +1,18 @@
 const sock = io();
 let name = '';
 
+
+
 const writeEvent = (text) => {
-    const parent = document.querySelector('#events');
-    const li = document.createElement('li');
+    const para = document.querySelector('#events');
 
-    li.innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
-
-    parent.appendChild(li);
-    parent.scrollTop = 45 * parent.children.length;
+    para.innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
 };
 
 const registerUser = (text) => {
+    if(name == '') {
+        name = text;
+    }
     sock.emit('register', name);
 }
 
@@ -55,5 +56,9 @@ writeEvent("Welcome to the game!");
 sock.on('message', writeEvent);
 
 sock.on('register', registerUser);
+
+sock.on('refresh', () => {
+    location.reload();
+});
 
 

@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <title>Rock Paper Scissors</title>
+    <meta name="vieport" content="height=device-width, initial-scale=1" />
+    <title>Rock Paper Scissors for 2</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
-    <h1>Here comes R-P-S game for two!</h1>
+    <h3>R-P-S game for two!</h3>
     <p id="name"></p>
     <div id="wrap">
         <form id="form">
@@ -17,7 +18,7 @@
         </form>
     </div>
     <div class="chat-wrapper">
-        <ul id="events"></ul>
+        <div id="events"></div>
     </div>
     <div class="choices-wrapper">
         <div class="choice">
@@ -31,7 +32,7 @@
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="src/client.js "></script>
+    <script src="src/client.js"></script>
 </body>
 
 </html>
