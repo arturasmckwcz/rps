@@ -21,15 +21,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 class RPSGame {
     constructor() {
-        this.player1 = null; ??
-        this.name1 = '';
+        this.player1 = null; // this.player1 is a socket which makes connection to a browser
+        this.name1 = ''; // this.name is a name of player
         this.player2 = null;
         this.name2 = '';
-        this.move = {player1: '', player2: ''};
+        this.move = {player1: '', player2: ''}; // this.move contains moves made by players
     }
 
     setPlayer1(player){
-        this.player1 = player;
+        this.player1 = player; // player is a socket
     }
     setPlayer2(player){
         this.player2 = player;
@@ -53,7 +53,7 @@ class RPSGame {
         return this.name2;
     }
     setMove(move){
-        if(move.player==this.name1) {
+        if(move.player==this.name1) { //move is identified by a name, not by a socket, otherwise a socket calls itself trying to do .emit
             this.move.player1 = move.move;
         };
         if(move.player==this.name2) {
@@ -69,11 +69,11 @@ class RPSGame {
     getScore() {
         let move = this.move.player1 + this.move.player2;
         console.log(new(Date), move);
-        switch(move) {
+        switch(move) { // simple logic switching by concatination of moves
             case 'rr':
             case 'pp':
             case 'ss':
-                return 'DRAW';
+                return 'DRAW'; //return the name of the winner
                 break;
             case 'rp':
             case 'ps':
@@ -99,17 +99,17 @@ game = new RPSGame();
 io.on('connection', (sock) => {
     if (game.getPlayer1() == null) {
         console.log(new(Date), "Setting PLAYER1.");
-        game.setPlayer1(sock);
-        game.setName1('PLAYER1');
-        sock.on('register', (name) => {
+        game.setPlayer1(sock); // set the current sock as player1
+        game.setName1('PLAYER1'); // give  temp name
+        sock.on('register', (name) => { // in case user entered name 
             game.setName1(name);
             console.log(new(Date), `Registering: ${game.getName1()} as PLAYER1`)
         });
-        sock.on('disconnect', () => {
+        sock.on('disconnect', () => { // in case user disconnected
             game.setPlayer1(null);
         });
-        sock.emit('register', 'PLAYER1');
-    } else if (game.getPlayer2() == null) {
+        sock.emit('register', 'PLAYER1'); // seem like redundant
+    } else if (game.getPlayer2() == null) { // all the same as with player1
         console.log(new(Date), "Setting PLAYER2.");
         game.setPlayer2(sock);
         game.setName2('PLAYER2');
@@ -125,19 +125,16 @@ io.on('connection', (sock) => {
 
     sock.on('move', (move) => {
         console.log(new(Date), game.getPlayer1()==sock, game.getPlayer2()==sock);
-        if (sock == game.getPlayer1() || sock == game.getPlayer2()) {
+        if (sock == game.getPlayer1() || sock == game.getPlayer2()) { // checking if one of players sent the move
             game.setMove(move);
             console.log(new(Date), game.getMove());
-            let flag = game.isMoveComplete();
             console.log(`PLAYER1: ${game.getName1()}\nPLAYER2: ${game.getName2()}`);
-            if (flag) {
+            if (game.isMoveComplete()) { // check if both players has made a move
                 console.log(new(Date), "Just about to conclude the game.");
-                io.emit('message', `The game is concluded by ${game.getScore()}`);
-                game.reset();
+                io.emit('message', `The game is concluded by ${game.getScore()}`); // get the winner!
+                game.reset(); // actualy reset move
             };
-        } else {
-            // io.emit('register');
-        }
+        };
     });
 });
 

@@ -1,15 +1,13 @@
 const sock = io();
-let name = '';
+let name = ''; // name will be used to register a palyer
 
 
 
-const writeEvent = (text) => {
-    const para = document.querySelector('#events');
-
-    para.innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
+const writeEvent = (text) => { // write date and message
+    document.querySelector('#events').innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
 };
 
-const registerUser = (text) => {
+const registerUser = (text) => { // set name and sent it to server
     if(name == '') {
         name = text;
     }
@@ -27,18 +25,17 @@ const onClick = (move) => {
         case 's':
             writeEvent('SCISSORS');
             break;
-        default:
+        default: // absolutely redundant
             writeEvent('NOTHING')
     };
-    sock.emit('move', {'player': name, 'move': move});  // Problem sending itself object by the object
+    sock.emit('move', {'player': name, 'move': move});  // Problem sending itself object by the object, so need to use name here
 };
 
 document.getElementById("button").addEventListener('click', (event) => {
     event.preventDefault();
-    name = document.getElementById("input").value;
-    document.getElementById("name").textContent = name;
-    document.getElementById("wrap").innerHTML = '';
-    sock.emit('register', name);
+    registerUser(document.getElementById("input").value);
+    document.getElementById("name").textContent = name; // display name
+    document.getElementById("wrap").innerHTML = ''; // destroy form
 });
 
 document.getElementById("r").addEventListener('click', () => {
@@ -51,13 +48,13 @@ document.getElementById("s").addEventListener('click', () => {
     onClick('s');
 });
 
-writeEvent("Welcome to the game!");
+writeEvent("Welcome to the game!"); // just welcome message
 
-sock.on('message', writeEvent);
+sock.on('message', writeEvent); // here comes the namo of the winner
 
 sock.on('register', registerUser);
 
-sock.on('refresh', () => {
+sock.on('refresh', () => { // redundant
     location.reload();
 });
 
