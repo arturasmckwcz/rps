@@ -1,5 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <link rel="stylesheet"; href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Asap:400,500,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Rock Paper Scissors</h1>
+    </header>
+
+
+    <div class="score-board">
+        <div id="user-label"; class="badge">==</div>
+        <div id="computer-label"; class="badge">==</div>
+        
+            
+            <form id="form">
+                <label id="name" for="input">Name:</label><br>
+                <div id="wrap">
+                    <input id="input" type="text">
+                    <button id="button">Enter</button>
+                </div>
+            </form>
+            
+        
+    </div>
+
+    <div class="result">
+        <p id="socket-message">Make your move!</p>
+    </div>
+
+    <div class="choices">
+        <div class="choice"; id="r">
+            <img src="images/rock.png"; height="75"; width="75"; alt="">
+        </div>
+        <div class="choice"; id="p">
+            <img src="images/paper.png"; height="75"; width="75"; alt="">
+        </div>
+        <div class="choice"; id="s">
+            <img src="images/scissors.png"; height="75"; width="75"; alt="">
+        </div>
+    </div>
+    <p id="action-message">Make your move!</p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="src/client.js"></script>
+</body>
+</html>
+
+
+
+
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta name="vieport" content="height=device-width, initial-scale=1" />
@@ -36,3 +94,5 @@
 </body>
 
 </html>
+
+-->

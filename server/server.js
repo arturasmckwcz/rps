@@ -102,7 +102,9 @@ io.on('connection', (sock) => {
         game.setPlayer1(sock); // set the current sock as player1
         game.setName1('PLAYER1'); // give  temp name
         sock.on('register', (name) => { // in case user entered name 
-            game.setName1(name);
+            if (name != '') {
+                game.setName1(name);
+            };
             console.log(new(Date), `Registering: ${game.getName1()} as PLAYER1`)
         });
         sock.on('disconnect', () => { // in case user disconnected
@@ -114,7 +116,9 @@ io.on('connection', (sock) => {
         game.setPlayer2(sock);
         game.setName2('PLAYER2');
         sock.on('register', (name) => {
-            game.setName2(name);
+            if (name != '') {
+                game.setName2(name);
+            };
             console.log(new(Date), `Registering: ${game.getName2()} as PLAYER2`)
         });
         sock.on('disconnect', () => {
@@ -131,7 +135,7 @@ io.on('connection', (sock) => {
             console.log(`PLAYER1: ${game.getName1()}\nPLAYER2: ${game.getName2()}`);
             if (game.isMoveComplete()) { // check if both players has made a move
                 console.log(new(Date), "Just about to conclude the game.");
-                io.emit('message', `The game is concluded by ${game.getScore()}`); // get the winner!
+                io.emit('message', `The winner is: ${game.getScore()}`); // get the winner!
                 game.reset(); // actualy reset move
             };
         };

@@ -1,41 +1,40 @@
 const sock = io();
 let name = ''; // name will be used to register a palyer
+let atcion_message = document.getElementById('action-message');
+let socket_message = document.getElementById('socket-message');
 
 
 
 const writeEvent = (text) => { // write date and message
-    document.querySelector('#events').innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
+    socket_message.innerHTML = `<pre>${String(new(Date)).substring(0, 24)}\n${text}</pre>`;
 };
-
-const registerUser = (text) => { // set name and sent it to server
-    if(name == '') {
-        name = text;
-    }
-    sock.emit('register', name);
-}
 
 const onClick = (move) => {
     switch(move) {
         case 'r':
-            writeEvent('ROCK');
+            atcion_message.textContent = 'Your move: ROCK';
             break;
         case 'p':
-            writeEvent('PAPER');
+            atcion_message.textContent = 'Your move: PAPER';
             break;
         case 's':
-            writeEvent('SCISSORS');
+            atcion_message.textContent = 'Your move: SCISSORS';
             break;
         default: // absolutely redundant
-            writeEvent('NOTHING')
+            atcion_message.textContent = 'Your move: NOTHING';
     };
     sock.emit('move', {'player': name, 'move': move});  // Problem sending itself object by the object, so need to use name here
 };
 
 document.getElementById("button").addEventListener('click', (event) => {
     event.preventDefault();
-    registerUser(document.getElementById("input").value);
-    document.getElementById("name").textContent = name; // display name
-    document.getElementById("wrap").innerHTML = ''; // destroy form
+    let value = document.getElementById("input").value;
+    if(value != "") { // do nothing if there is no name entered
+        name = value // set name
+        sock.emit('register', name); // send name to register with player
+        document.getElementById("name").textContent = name; // display name
+        document.getElementById("wrap").innerHTML = ''; // destroy form
+    };
 });
 
 document.getElementById("r").addEventListener('click', () => {
@@ -52,7 +51,12 @@ writeEvent("Welcome to the game!"); // just welcome message
 
 sock.on('message', writeEvent); // here comes the namo of the winner
 
-sock.on('register', registerUser);
+sock.on('register', (text) => { // set name and sent it to server
+    if(name == '') {
+        name = text;
+    }
+    sock.emit('register', name);
+});
 
 sock.on('refresh', () => { // redundant
     location.reload();

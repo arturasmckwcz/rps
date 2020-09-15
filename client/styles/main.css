@@ -1,3 +1,120 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #25272E;
+}
+
+header {
+    background: white;
+    padding: 20px;
+}
+
+header > h1 {
+    color: #25272E;
+    text-align: center;
+    font-family: Asap, sans-serif;
+}
+
+.score-board {
+    margin: 20px auto;
+    border: 3px solid white;
+    border-radius: 4px;
+    text-align: center;
+    font-family: Asap, sans-serif;
+    width: 300px;
+    height: 100px;
+    color: white;
+    font-size: 30px;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.badge {
+    background: #E25840;
+    color: white;
+    font-size: 14px;
+    padding: 3px 10px;
+    font-family: Asap, sans-serif;
+}
+
+#user-label {
+    position: absolute;
+    top: 30px;
+    left: -25px;
+}
+
+#computer-label {
+    position: absolute;
+    top: 30px;
+    right: -30px;
+}
+
+.result {
+    color: white;
+    font-size: 30px;
+}
+
+.result > p {
+    text-align: center;
+    font-weight: bold;
+    font-family: Asap, sans-serif;
+}
+
+.choices {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.choice {
+    display: inline-block;
+    margin: 0px 20px;
+    border: 4px solid white;
+    border-radius: 50%;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.choice:hover {
+    cursor: pointer;
+    background: black;
+}
+
+#action-message {
+    text-align: center;
+    font-family: Asap, sans-serif;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.green-glow {
+    border: 4px solid #4DCC7D;
+    box-shadow: 0 0 10px #31B43A;
+}
+
+.red-glow {
+    border: 4px solid #FC121B;
+    box-shadow: 0 0 10px #D01115;
+}
+
+.grey-glow {
+    border: 4px solid #464647;
+    box-shadow: 0 0 10px #25292B;
+}
+
+
+
+
+
+
+/*
+
 body {
 	font-family: Raleway, sans-serif;
 	font-size: 2rem;
@@ -7,7 +124,7 @@ body {
 }
 
 #events {
-    height: 10rem; /*calc(85vh - 450px);*/
+    height: 10rem;
     overflow-y: auto;
 }
 
@@ -30,3 +147,6 @@ body {
     color: darkred;
     font-size: 2.5rem;
 }
+
+
+*/
